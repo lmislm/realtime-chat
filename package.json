@@ -5,6 +5,8 @@
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
+    "build": "webpack-dev-server",
+    "build:prod": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +22,11 @@
   "dependencies": {
     "express": "^4.16.2",
     "socket.io": "^1.4.8"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.10",
+    "style-loader": "^0.20.2",
+    "webpack": "^3.11.0",
+    "webpack-dev-server": "^2.11.1"
   }
 }

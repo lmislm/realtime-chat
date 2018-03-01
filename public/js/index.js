@@ -26,6 +26,11 @@ socket.emit('createMessage', {
     console.log('已获取数据',data);
 });
 
+socket.on('newLocationMessage',function (message) {
+   var li = jQuery('<li></li>') ;
+   var a = jQuery('<a class="">我的位置（链接）</a>') ;
+});
+
 jQuery('#message-form').on('submit', function (e) {
    e.preventDefault();
 
@@ -45,8 +50,8 @@ localtionButton.on('click', function () {
 
     navigator.geolocation.getCurrentPosition(function (position) {
         socket.emit('createLocationMessage', {
+            longitude: position.coords.longitude, //经度
             latitude: position.coords.latitude,
-            longitude: position.coords.longitude
         });
     },function () {
         alert('请开启获取位置有关设置');

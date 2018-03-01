@@ -11,11 +11,30 @@ const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
 
 var app = express();
-var server = http.createServer(app);
-var io = socketIO(server);
-
 app.use(express.static(publicPath));
 
-app.listen(port,() => {
+var server = http.createServer(app);
+
+var io = socketIO(server);
+
+io.on('connection',function(socket) {
+    console.log('new user connect');
+
+    socket.emit('newMessage',{
+        from: 'lm',
+        text: '你好',
+        createdAt: 123123
+    });
+
+    socket.on('createMessage', function (message) {
+        console.log('createMessage', message)
+    })
+
+    socket.on('disconnect', function() {
+        console.log('User was disconnected')
+    })
+});
+
+server.listen(port,function() {
     console.log('服务已经启动')
 });

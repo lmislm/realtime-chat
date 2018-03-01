@@ -7,7 +7,8 @@
     "start": "node server/server.js",
     "build": "webpack-dev-server",
     "build:prod": "webpack -p",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha server/**/*.test.js",
+    "test-watch": " nodemon --exec 'npm test'"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
   },
   "devDependencies": {
     "css-loader": "^0.28.10",
+    "expect": "^1.20.2",
+    "mocha": "^3.0.2",
     "style-loader": "^0.20.2",
     "webpack": "^3.11.0",
     "webpack-dev-server": "^2.11.1"

@@ -1,1 +1,3 @@
 # realtime-chat
++ mocha 
++ expect

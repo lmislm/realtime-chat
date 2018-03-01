@@ -28,9 +28,10 @@ io.on('connection',function(socket) {
     //broadcast.emit from Admin 通知新用户的加入
     socket.broadcast.emit('newMessage', generateMessage('Admin', '有新用户加入'));
 
-    socket.on('createMessage', function (message) {
+    socket.on('createMessage', function (message, callback) {
         console.log('createMessage', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback();
         // socket.broadcast.emit('newMessage', {
         //     from: message.from,
         //     text: message.text,

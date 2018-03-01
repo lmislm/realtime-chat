@@ -31,13 +31,12 @@ io.on('connection',function(socket) {
     socket.on('createMessage', function (message, callback) {
         console.log('createMessage', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
-        callback();
-        // socket.broadcast.emit('newMessage', {
-        //     from: message.from,
-        //     text: message.text,
-        //     createdAt: new Date().getTime(),
-        // })
+        callback('来自服务器的消息');
     });
+
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newMessage', generateMessage('Admin',`${coords.latitude}, ${coords.longitude}`))
+    })
 
     socket.on('disconnect', function() {
         console.log('User was disconnected')

@@ -36,3 +36,19 @@ jQuery('#message-form').on('submit', function (e) {
 
    });
 });
+
+var localtionButton = jQuery('#send-location');
+localtionButton.on('click', function () {
+    if(!navigator.geolocation) {
+        return alert('不支持发送地理位置');
+    }
+
+    navigator.geolocation.getCurrentPosition(function (position) {
+        socket.emit('createLocationMessage', {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        });
+    },function () {
+        alert('请开启获取位置有关设置');
+    })
+})

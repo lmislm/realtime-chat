@@ -20,15 +20,33 @@ var io = socketIO(server);
 io.on('connection',function(socket) {
     console.log('new user connect');
 
-    socket.emit('newMessage',{
-        from: 'lm',
-        text: '你好',
-        createdAt: 123123
+    //emit from Admin text 欢迎进入App
+    socket.emit('newMessage', {
+        from: 'Admin',
+        text: '欢迎加入聊天',
+        createdAt: new Date().getTime(),
+    });
+
+    //broadcast.emit from Admin 通知新用户的加入
+    socket.broadcast.emit('newMessage', {
+        from: 'Admin',
+        text: '新用户加入',
+        createdAt: new Date().getTime(),
     });
 
     socket.on('createMessage', function (message) {
-        console.log('createMessage', message)
-    })
+        console.log('createMessage', message);
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt:new Date().getTime(),
+        });
+        // socket.broadcast.emit('newMessage', {
+        //     from: message.from,
+        //     text: message.text,
+        //     createdAt: new Date().getTime(),
+        // })
+    });
 
     socket.on('disconnect', function() {
         console.log('User was disconnected')

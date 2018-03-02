@@ -28,7 +28,12 @@ socket.emit('createMessage', {
 
 socket.on('newLocationMessage',function (message) {
    var li = jQuery('<li></li>') ;
-   var a = jQuery('<a class="">我的位置（链接）</a>') ;
+   var a = jQuery('<a target="_blank">我的位置（链接）</a>') ;
+
+   li.text(`${message.from};`);
+   a.attr('href', message.url);
+   li.append(a);
+   jQuery('#messages').append(li);
 });
 
 jQuery('#message-form').on('submit', function (e) {

@@ -12,9 +12,8 @@ var generateMessage = function (from, text) {
 var generateLocationMessage = (from, latitude, longitude) => {
     return {
         from,
-        //调用高德地图URI APIhttps://ditu.amap.com/lng=126.5537929&lat=45.8686024
-        url: `https://ditu.amap.com/lng=${longitude}&lat=${latitude}`,
-        // url: `https://www.google.com/maps?q=${latitude},${longitude}`,
+        //调用高德地图URI API https://ditu.amap.com/lng=126.5537929&lat=45.8686024
+        url: `https://ditu.amap.com/lng=${longitude}&lat=${latitude}`, 
         createdAt: new Date().getTime()
     }
 }

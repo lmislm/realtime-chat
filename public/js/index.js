@@ -3,6 +3,25 @@
  */
 var socket = io();
 
+function scrollToBottom(){
+    // 选择器
+    var messages = jQuery('#messages');
+    var newMessage = messages.children('li:last-child')
+    //高度:元素可见区域的高度，容器的高度，不包括border和滚动条的高度
+    var clientHeight = messages.prop('clientHeight');
+    // 元素中垂直滚动条滚动的距离
+    var scrollTop = messages.prop('scrollTop');
+    //指元素内容的高度
+    var scrollHeight = messages.prop('scrollHeight');
+
+    var newMessageHeight = newMessage.innerHeight();
+    var lastMessageHeight = newMessage.prev().innerHeight();
+
+    if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+      messages.scrollTop(scrollHeight);
+    }
+}
+
 socket.on('connect',() => {
     console.log('connect to server')
 
@@ -21,6 +40,7 @@ socket.on('newMessage', function (message) {
         createdAt: formattedTime
     });
     jQuery('#messages').append(html);
+    scrollToBottom();
 //    console.log('newMessage', message);
 //    var li = jQuery('<li></li>');
 //    li.text(`${message.from}   ${formattedTime} ${message.text}`);
@@ -36,21 +56,22 @@ socket.emit('createMessage', {
 });
 
 socket.on('newLocationMessage',function (message) {
-   var formattedTime = moment(message.createdAt).format("h:mm a");  
+    var formattedTime = moment(message.createdAt).format("h:mm a");  
     var template = jQuery('#location-message-template').html();
     var html = Mustache.render(template, {
         from: message.from,
         url: message.url,
         createdAt: formattedTime
     });
-
-//    var li = jQuery('<li></li>') ;
-//    var a = jQuery('<a target="_blank">我的大概位置（链接）</a>') ;
-
-//    li.text(`${message.from} ${formattedTime}`);
-//    a.attr('href', message.url);
-//    li.append(a);
-   jQuery('#messages').append(html);
+    
+    //    var li = jQuery('<li></li>') ;
+    //    var a = jQuery('<a target="_blank">我的大概位置（链接）</a>') ;
+    
+    //    li.text(`${message.from} ${formattedTime}`);
+    //    a.attr('href', message.url);
+    //    li.append(a);
+    jQuery('#messages').append(html);
+    scrollToBottom();
 });
 
 jQuery('#message-form').on('submit', function (e) {

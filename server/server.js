@@ -31,6 +31,7 @@ io.on('connection',function(socket) {
     socket.on('createMessage', function (message, callback) {
         console.log('createMessage', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
+        // callback('来自服务器的消息');
         callback('来自服务器的消息');
     });
 

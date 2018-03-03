@@ -2,60 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>加入聊天</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="chat">
-    
-    <div class="chat__sidebar">
-        <h3>成员</h3>
-        <div id="users"></div>
-    </div>
-
-    <div class="chat__main">
-        <ol id="messages" class="chat__messages"></ol>
-
-        <div class="chat__footer">
-            <form action="" id="message-form">
-                <input type="text" name="message" placeholder="发送消息" autofocus autocomplete="off">
-                <button>发送</button>
-            </form>
-            <button id="send-location">发送位置</button>        
+<body class="centered-form">
+    <div class="centered-form__form">
+        <form action="/chat.html">
+            <div class="form-field">
+                <h3>加入聊天</h3>
+            </div>
+            <div class="form-field">
+                <label for="">输入名字</label>
+                <input type="text" name="name" autofocus/>
+            </div>
+            <div class="form-field">
+                <label for="">房间名字</label>
+                <input type="text" name="room" autofocus/>
+            </div>
+            <div class="form-field">
+                <button>加入</button>
+            </div>
+            <div class="form-field">
+            <div class="form-field">
+            <div class="form-field">
+            <div class="form-field">
+            <div class="form-field">            
+        </form>
+            
         </div>
-    </div>
-    
-    <script id="message-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h4>{{ from }}</h4>
-                <span>{{ createdAt }}</span>
-            </div>
-            <div class=" message__body ">
-                <p>{{ text }}</p>
-            </div>
-        </li>
-    </script>
-
-    <script id="location-message-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h4>{{ from }}</h4>
-                <span>{{ createdAt }}</span>
-            </div>
-            <div class=" message__body ">
-                <p>
-                    <a href="{{ url }}" target="_blank">我的大概位置（链接）</a>
-                </p>
-            </div>
-        </li>
-    </script>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="js/libs/jquery-3.3.1.min.js"></script>
-    <script src="js/libs/moment.js"></script>
-    <script src="js/libs/mustache.min.js"></script>
-    <!--<script src="dist/bundle.js"></script>-->
-    <script src="js/index.js"></script>
-
+    </div>    
 </body>
 </html>

@@ -39,11 +39,13 @@ socket.on('newLocationMessage',function (message) {
 jQuery('#message-form').on('submit', function (e) {
    e.preventDefault();
 
+    var messageTextbox = jQuery('[name=message]')
+
    socket.emit('createMessage', {
        from: 'User',
-       text: jQuery('[name=message]').val()
+       text: messageTextbox.val()
    },function () {
-
+       messageTextbox.val('')
    });
 });
 
@@ -53,12 +55,16 @@ localtionButton.on('click', function () {
         return alert('不支持发送地理位置');
     }
 
+    localtionButton.attr('disabled','disabled').text('正在发送位置...')
+
     navigator.geolocation.getCurrentPosition(function (position) {
+        localtionButton.removeAttr("disabled").text('发送位置');
         socket.emit('createLocationMessage', {
             longitude: position.coords.longitude, //经度
             latitude: position.coords.latitude,
         });
     },function () {
+        localtionButton.removeAttr('disabled').text('发送位置');
         alert('请开启获取位置有关设置');
     })
 })

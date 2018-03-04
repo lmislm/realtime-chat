@@ -23,8 +23,17 @@ function scrollToBottom(){
 }
 
 socket.on('connect',() => {
-    console.log('connect to server')
+    // console.log('connect to server')
+    var params = jQuery.deparam(window.location.search);
 
+    socket.emit('join', params, function(err) {
+        if(err) {
+            alert(err);
+            window.location.href = '/';
+        }else{
+            console.log('没有错误')
+        }
+    });
 });
 socket.on('disconnect',() => {
     console.log('Disconnect to server')

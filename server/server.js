@@ -8,6 +8,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/validation');
 
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000;
@@ -21,12 +22,27 @@ var io = socketIO(server);
 
 io.on('connection',function(socket) {
     console.log('new user connect');
-
     //emit from Admin text 欢迎进入App
     socket.emit('newMessage', generateMessage('Admin', '欢迎进入聊天App'));
 
     //broadcast.emit from Admin 通知新用户的加入
     socket.broadcast.emit('newMessage', generateMessage('Admin', '有新用户加入'));
+
+    socket.on('join', (params, callback) => {
+        if(!isRealString(params.name) || !isRealString(params.room)) {
+            callback('输入房间名和名字');
+        }
+
+        socket.join(params.room);
+        // socket.leave('xx离开');
+
+        // io.emit
+        //socket.broadcast.emit -> socket.broadcast.to('所有人').emit
+        //socket.emit
+        socket.emit('newMessage', generateMessage('Admin', '欢迎进入'));
+        socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} 加入了聊天`));
+        callback();     
+    });
 
     socket.on('createMessage', function (message, callback) {
         console.log('createMessage', message);

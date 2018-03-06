@@ -25,7 +25,7 @@ var users = new Users();
 io.on('connection',function(socket) {
     console.log('new user connect');
     //emit from Admin text 欢迎进入App
-    socket.emit('newMessage', generateMessage('Admin', '欢迎进入聊天App'));
+    // socket.emit('newMessage', generateMessage('Admin', '欢迎进入聊天App'));
 
     //broadcast.emit from Admin 通知新用户的加入
     // socket.broadcast.emit('newMessage', generateMessage('Admin', '有新用户加入'));
@@ -46,14 +46,14 @@ io.on('connection',function(socket) {
         // io.emit
         //socket.broadcast.emit -> socket.broadcast.to('所有人').emit
         //socket.emit
-        // socket.emit('newMessage', generateMessage('Admin', '欢迎进入'));
+        socket.emit('newMessage', generateMessage('Admin', '欢迎进入'));
         socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} 加入了聊天`));
         callback();     
     });
 
     socket.on('createMessage', function (message, callback) {
         // console.log('createMessage', message);
-        var user = users.getUser;
+        var user = users.getUser(socket.id);
 
         if(user && isRealString(message.text)) {
 

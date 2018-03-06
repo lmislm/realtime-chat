@@ -52,14 +52,24 @@ io.on('connection',function(socket) {
     });
 
     socket.on('createMessage', function (message, callback) {
-        console.log('createMessage', message);
-        io.emit('newMessage', generateMessage(message.from, message.text));
+        // console.log('createMessage', message);
+        var user = users.getUser;
+
+        if(user && isRealString(message.text)) {
+
+            io.to(user.room).emit('newMessage', generateMessage(message.from, message.text));
+        }
         // callback('来自服务器的消息');
-        callback('来自服务器的消息');
+        callback();
     });
 
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newLocationMessage', generateLocationMessage('Admin',coords.latitude, coords.longitude))
+        var user = users.getUser(socket.id);
+
+        if(user) {
+
+            io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
+        }
     })
 
     socket.on('disconnect', function() {

@@ -39,6 +39,17 @@ socket.on('disconnect',() => {
     console.log('Disconnect to server')
 });
 
+socket.on('updateUserList', function(users){
+    // console.log('users list ', users);
+    var ol = jQuery('<ol></ol>');
+
+    users.forEach(function (user){
+        ol.append(jQuery('<li></li>').text(user));
+    });
+
+    jQuery('#users').html(ol);
+})
+
 socket.on('newMessage', function (message) {
     //mustache template
     var formattedTime = moment(message.createdAt).format('h:mm a');
@@ -57,12 +68,12 @@ socket.on('newMessage', function (message) {
 //    jQuery('#messages').append(li);
 });
 
-socket.emit('createMessage', {
-    from: '张三',
-    text: '张三来了！',
-},function (data) {
-    console.log('已获取数据',data);
-});
+// socket.emit('createMessage', {
+//     from: '张三',
+//     text: '张三来了！',
+// },function (data) {
+//     console.log('已获取数据',data);
+// });
 
 socket.on('newLocationMessage',function (message) {
     var formattedTime = moment(message.createdAt).format("h:mm a");  

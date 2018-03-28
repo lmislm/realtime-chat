@@ -5,13 +5,13 @@
 + expect
 
 #### Test 
-> npm test 
-高德地图 URI Api
+> `npm test`  `高德地图 URI Api`  `Moment.js`    `mustache.js`  `deparam`  `store with es6`
+### use
 
-Moment.js
+> git clone https://github.com/lmislm/realtime-chat.git
 
-mustache.js
+> cd realtime-chat 
 
-deparam
+> cnpm install 
 
-store with es6
+> nodemon
